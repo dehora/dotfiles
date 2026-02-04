@@ -1,0 +1,361 @@
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+
+(require 'package)
+(require 'use-package)
+
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+
+;;
+;; Allow hash to be entered
+;;
+(define-key key-translation-map (kbd "M-3") (kbd "#"))
+
+;;
+;; more allow hash to be entered
+;;
+(defun insert-pound ()
+  (insert "#"))
+;;
+;; 2022-12-14: does not seem to be needed, removes a lambda quote warning
+;;
+;;(global-set-key (kbd "M-3") '(lambda()(interactive)(insert-pound)))
+
+;;
+;; yaml-mode
+;;
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
+
+;;
+;; org-mode
+;;
+(require 'org)
+(require 'org-habit)
+(require 'org-superstar)
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+;;(require 'org-super-agenda)
+(require 'org-journal)
+;;
+;; fix things up on a mac with an irish keyboard
+;; 2022-12-14: this didn't work higher up, placed just below org requires was ok
+;;
+(define-key org-mode-map (kbd "C-c #") nil) ; remove old binding
+(define-key org-mode-map (kbd "C-c £") 'org-update-statistics-cookies)
+
+;;
+;; org-capture conf
+;;
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(setq org-capture-templates '(("w" "work" entry
+                               (file+headline "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/work.org" "Inbox")
+                               "* TODO %i%?")
+                              ("d" "dehora" entry
+                               (file+headline "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/dehora.org" "Inbox")
+                               "* TODO %i%? \n %U")))
+
+;;
+;; allow refile to target a file and then optionally create an new entry
+;;
+(setq org-refile-allow-creating-parent-nodes 'confirm)
+(setq org-refile-use-outline-path 'file)
+
+;;
+;; org agenda conf
+;;
+(define-key global-map "\C-ca" 'org-agenda)
+
+;;
+;; org logging
+;;
+;; 2022-12-14: set to f after adding log into drawer
+;;
+;;(setq org-log-done f)
+;;
+;; 
+;;
+(setq org-log-redeadline t)
+;;
+;; 
+;;
+(setq org-log-reschedule t)
+
+;;
+;; markdown
+;;
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+(setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+;;
+;; duplicate lines ide style
+;;
+(defun duplicate-line()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank)
+  (open-line 1)
+  (next-line 1)
+  (yank)
+)
+(global-set-key (kbd "C-d") 'duplicate-line)
+
+;;
+;; Set the debug option to enable a backtrace when a problem occurs.
+;;
+(setq debug-on-error t)
+
+;;
+;; make alt- optional
+;;
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-c\C-m" 'execute-extended-command)
+
+;;
+;; whois
+;;
+(setq user-full-name {{ .emacs_name | quote }})
+(setq user-mail-address {{ .emacs_email | quote }})
+
+;;
+;; Turn on the column numbering in the minibuffer
+;;
+(column-number-mode 1)
+
+;;
+;; Turn off the &*^%$ bell!
+;;
+(setq visible-bell t)
+
+;;
+;; HOME
+;;
+(cd (getenv "HOME"))
+
+;;
+;;
+;;
+(setq frame-title-format "%b")
+(setq icon-title-format "%f")
+
+;;
+;; set up the nice time display on the modeline
+;;
+(setq display-time-day-and-date 't)
+(display-time)
+
+;;
+;; no tabs in store and tabs are 2 spaces
+;;
+(setq indent-tabs-mode nil)
+(setq c-basic-indent 2)
+(setq tab-width 2)
+
+;;
+;; Colorized fonts
+;; Turn on font-lock in all modes that support it
+;;
+(global-font-lock-mode t)
+
+;;
+;; Maximum colors
+;;
+(setq font-lock-maximum-decoration t)
+
+;;
+;; Highlighting
+;; highlight region between point and mark
+;;
+(transient-mark-mode t)
+
+;;
+;; highlight during query
+;;
+(setq query-replace-highlight t)
+
+;;
+;; highlight incremental search
+;;
+(setq search-highlight t)
+
+;;
+;; Show matching parens
+;;
+(show-paren-mode t)
+
+;;
+;; Display the column number of the point in the mode line
+;;
+(column-number-mode t)
+
+;;
+;; indent with spaces instead of tabs
+;;
+(setq-default indent-tabs-mode nil)
+
+;;
+;; Ensure newline at end of all files
+;;
+(setq require-final-newline t)
+
+;;
+;; Don't add new lines to the end of a file when using down-arrow key
+;;
+(setq next-line-add-newlines nil)
+
+;;
+;; Replace yes-or-no question responses with y-or-n responses
+;;
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;;
+;; time display is last because during .emacs debugging if .emacs file is OK
+;; then time will display, otherwise I know that entire .emacs file was
+;; not read
+;;
+;; Display time in the mode line
+;;
+(display-time)
+
+
+;;(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+
+
+;;(add-hook 'mixed-pitch-mode-hook #'solaire-mode-reset)
+;;(use-package mixed-pitch
+;;  :hook
+;;  ;; If you want it in all text modes:
+;;  (text-mode . mixed-pitch-mode))
+
+
+
+;;
+;; Set via emacs config
+;;
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#282a36" :foreground "#f8f8f2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "iA Writer Mono V"))))
+ '(org-level-1 ((t (:inherit bold :foreground "#ff79c6" :height 1.1))))
+ '(org-todo ((t (:background "#373844" :foreground "#ffb86c" :weight normal)))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(custom-enabled-themes '(dracula))
+ '(custom-safe-themes
+   '("05626f77b0c8c197c7e4a31d9783c4ec6e351d9624aa28bc15e7f6d6a6ebd926" default))
+ '(default-frame-alist '((fullscreen . maximized)))
+ '(display-time-mode t)
+ '(dracula-enlarge-headings t)
+ '(dracula-height-doc-title 1.2)
+ '(fill-column 78)
+ '(initial-buffer-choice
+   "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org")
+ '(initial-frame-alist nil)
+ '(org-agenda-files
+   '("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/dehora.org" "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org//work.org"))
+ '(org-blank-before-new-entry '((heading) (plain-list-item)))
+ '(org-default-notes-file
+   "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/inbox.org")
+ '(org-directory
+   "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org")
+ '(org-journal-date-format "%F")
+ '(org-journal-dir
+   "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal")
+ '(org-journal-file-format "%Y-%m-%d.org")
+ '(org-log-into-drawer t)
+ '(org-log-refile 'time)
+ '(org-priority-default 2)
+ '(org-priority-highest 1)
+ '(org-priority-lowest 3)
+ '(org-refile-targets
+   '(("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/work.org" :level . 1)
+     ("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/dehora.org" :level . 1)
+     ("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/dehora.org_archive" :todo . "DONE")
+     ("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/dehora.org_archive" :level . 1)
+     ("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/work.org_archive" :todo . "DONE")
+     ("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/work.org_archive" :level . 1)))
+ '(org-superstar-headline-bullets-list '(("✪" 9673) ("✸" 9673) ("✿" 9673) ("✸" 9673)))
+ '(org-todo-keyword-faces '(("TODO" . "#ff5555") ("NOPE" . "#bd93f9")))
+ '(org-todo-keywords
+   '((sequence "TODO(t!)" "DOING(g!)" "|" "DONE(d!)")
+     (sequence "LATER(l)" "|" "NOPE(n@)")))
+ '(org-use-fast-todo-selection 'auto)
+ '(package-selected-packages
+   '(mixed-pitch org-journal org-superstar ts s ht bind-key dash yaml-mode use-package dracula-theme))
+ '(show-paren-mode t))
+
+;; 2022-12-15: try this out
+;;
+;; Increase line spacing
+;;
+;;  (setq-default line-spacing 6)
+
+;; ============================================================================
+;; older
+;; ============================================================================
+
+;; 2022-12-15: this bullet, ○, makes vertical spacing too high
+
+;; '(org-roam-directory
+;;   "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org-roam")
+;; '(org-roam-mode t nil (org-roam))
+
+
+;; old org bullets
+;;   (setq org-bullets-bullet-list '("●" "◉" "◎" "○" "•" "►")))
+;;  (setq org-bullets-bullet-list '("◉" "○" "●" "►" "•")))
+
+;;
+;; Make Text mode the default mode for new buffers
+;; turn on Auto Fill mode automatically in Text mode
+;; Set the fill column to 80 (gives 80 column wide lines)
+;;
+;;(setq default-major-mode 'text-mode)
+;;(add-hook 'text-mode-hook 'turn-on-auto-fill)
+;;(setq-default fill-column 80)
+
+
+; (set-face-attribute 'default nil :font "Droid Sans Mono-12")
+;(set-default-font "-*-lucidatypewriter-medium-*-*-*-12-*-*-*-*-*-*-*")
+;(set-default-font "-*-pt-medium-r-normal--12-180-75-75-m-110-iso8859-1")
+
+
+;;
+;; Display settings
+;; default size and color options for all frames
+;;
+;; (setq default-frame-alist
+;;      '(
+       ; frame width and height
+        ;;(width             . 120)
+        ;;(height            . 100)
+        ; foreground, background, and cursor colors
+;;        (background-color  . "cornsilk1")
+;;        )
+;;      )
+        ; places top left corner of initial frame at location (0, 80) on screen
+;; (setq initial-frame-alist
+;;      '(
+;;        (top               . 0)
+;;        (left              . 0)
+;;        )
+;;      )
+;;
+
+;; '(custom-safe-themes
+;;   '("05626f77b0c8c197c7e4a31d9783c4ec6e351d9624aa28bc15e7f6d6a6ebd926" "824d07981667fd7d63488756b6d6a4036bae972d26337babf7b56df6e42f2bcd" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
