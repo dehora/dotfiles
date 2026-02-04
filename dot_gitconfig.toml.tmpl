@@ -1,0 +1,20 @@
+[init]
+
+[hub]
+protocol = https
+[user]
+	email = {{ .git_email | quote }}
+	name = {{ .git_name | quote }}
+	signingkey = {{ .git_signingkey | quote }}
+[color]
+	ui = true
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[fetch]
+	prune = true
+[commit]
+	gpgsign = true
+[branch]
+	sort=-committerdate
