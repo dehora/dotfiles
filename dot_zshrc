@@ -87,6 +87,7 @@ plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
+  fnm
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -194,3 +195,9 @@ export SAVEHIST=1000000
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
+
+# 
+# Added by dehora on 2026-02-04
+# 
+# fnm
+eval "$(fnm env --use-on-cd --shell zsh)"
