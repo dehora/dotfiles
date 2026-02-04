@@ -201,3 +201,6 @@ setopt HIST_REDUCE_BLANKS
 # 
 # fnm
 eval "$(fnm env --use-on-cd --shell zsh)"
+# Codex CLI helpers
+alias cx="codex"
+cxcd() { cd "$1" && codex; }
