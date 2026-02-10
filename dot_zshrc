@@ -190,8 +190,8 @@ eval "$(uvx --generate-shell-completion zsh)"
 # Create an alias for searching history
 alias hg='history | grep'
 # history searching
-export HISTSIZE=1000000
-export SAVEHIST=1000000
+export HISTSIZE=50000
+export SAVEHIST=50000
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
