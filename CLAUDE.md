@@ -39,9 +39,14 @@ Access variables in templates as `{{ .git_email }}` (top-level data keys).
 | Source file | Target | Templated | Notes |
 |---|---|---|---|
 | `dot_zshrc` | `~/.zshrc` | No | Zsh with oh-my-zsh, Powerlevel10k, fnm/nvm/pyenv/sdkman/rtx/uv/cargo |
+| `dot_zprofile` | `~/.zprofile` | No | Zsh login shell profile |
+| `dot_p10k.zsh` | `~/.p10k.zsh` | No | Powerlevel10k prompt configuration |
 | `dot_gitconfig.tmpl` | `~/.gitconfig` | Yes | GPG signing, user identity from template vars |
+| `dot_config/git/ignore` | `~/.config/git/ignore` | No | Global gitignore |
 | `private_dot_emacs.tmpl` | `~/.emacs` | Yes | org-mode, org-journal, Dracula theme, Irish keyboard hash key fix |
 | `dot_config/ghostty/config` | `~/.config/ghostty/config` | No | Ghostty terminal settings |
+| `private_dot_gnupg/gpg-agent.conf` | `~/.gnupg/gpg-agent.conf` | No | 24h passphrase cache TTL |
+| `private_dot_gnupg/common.conf` | `~/.gnupg/common.conf` | No | Enables keyboxd backend |
 
 ## Git Commits
 
