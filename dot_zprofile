@@ -1,0 +1,27 @@
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+#
+# Added by dehora on 2023-12-15
+# solves for gpg: clear-sign failed: Inappropriate ioctl for device
+#
+export GPG_TTY=$(tty)
+
+#
+# Added by dehora on 2023-12-15
+#
+export PATH="$PATH:/Users/bill/bin"
+#
+#
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+#
+#
+
+# Added by Toolbox App
+export PATH="$PATH:/Users/bill/Library/Application Support/JetBrains/Toolbox/scripts"
+
+
+# Created by `pipx` on 2024-06-18 09:47:47
+export PATH="$PATH:/Users/bill/.local/bin"
