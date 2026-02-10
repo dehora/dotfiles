@@ -1,0 +1,10 @@
+# Global Claude Code Guidance
+
+## Git
+- Use present tense verbs in commit messages (e.g., "Adds feature", "Fixes bug", "Removes unused code")
+- GPG signing is enabled. Before asking Claude to commit, unlock the GPG agent: `echo "test" | gpg --clearsign`. Passphrase is cached for 24 hours.
+- SSH key should be loaded in the agent before pushing: `ssh-add --apple-use-keychain`
+
+## Communication
+- Short confirmations (y, n, ✅, n1) are normal — not curt, just efficient
+- Match that energy: keep responses concise, skip filler
