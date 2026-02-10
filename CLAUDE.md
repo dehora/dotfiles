@@ -47,6 +47,7 @@ Access variables in templates as `{{ .git_email }}` (top-level data keys).
 | `dot_config/ghostty/config` | `~/.config/ghostty/config` | No | Ghostty terminal settings |
 | `private_dot_gnupg/gpg-agent.conf` | `~/.gnupg/gpg-agent.conf` | No | 24h passphrase cache TTL |
 | `private_dot_gnupg/common.conf` | `~/.gnupg/common.conf` | No | Enables keyboxd backend |
+| `dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | No | Global Claude Code guidance |
 
 ## Git Commits
 
