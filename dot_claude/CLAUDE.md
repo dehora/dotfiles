@@ -5,6 +5,9 @@
 - GPG signing is enabled. Before asking Claude to commit, unlock the GPG agent: `echo "test" | gpg --clearsign`. Passphrase is cached for 24 hours.
 - SSH key should be loaded in the agent before pushing: `ssh-add --apple-use-keychain`
 
+## Python
+- Always use `uv` to manage Python — use `uv run` to execute scripts, `uv pip` for packages, `uv venv` for environments
+
 ## Communication
 - Short confirmations (y, n, ✅, n1) are normal — not curt, just efficient
 - Match that energy: keep responses concise, skip filler
