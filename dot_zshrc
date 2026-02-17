@@ -204,3 +204,6 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 # Codex CLI helpers
 alias cx="codex"
 cxcd() { cd "$1" && codex; }
+# notesmd-cli shorthand
+alias notesmd="notesmd-cli"
+eval "$(direnv hook zsh)"
