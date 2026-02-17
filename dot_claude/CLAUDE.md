@@ -11,6 +11,9 @@
 ## Node.js
 - Always use `fnm` to manage Node.js versions — use `fnm use` to switch versions, `fnm install` to add new ones
 
+## Dotfiles
+- `~/.claude/CLAUDE.md` is managed by chezmoi — always use `chezmoi re-add`, commit, and push in the chezmoi source directory (`~/.local/share/chezmoi`) to persist changes
+
 ## Communication
 - Short confirmations (y, n, ✅, n1) are normal — not curt, just efficient
 - Match that energy: keep responses concise, skip filler
