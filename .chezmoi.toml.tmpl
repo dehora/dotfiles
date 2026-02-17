@@ -3,10 +3,12 @@
 {{- $git_signingkey := promptStringOnce . "git_signingkey" "Git signingkey" -}}
 {{- $emacs_name := promptStringOnce . "emacs_name" "Emacs name" -}}
 {{- $emacs_email := promptStringOnce . "emacs_email" "Emacs email" -}}
+{{- $todoist_api_token := promptStringOnce . "todoist_api_token" "Todoist API token" -}}
 
 [data]
     git_email = {{ $git_email | quote }}
     git_name = {{ $git_name | quote }}
     git_signingkey = {{ $git_signingkey | quote }}
-    emacs_name = {{ $emacs_name | quote }}    
+    emacs_name = {{ $emacs_name | quote }}
     emacs_email = {{ $emacs_email | quote }}
+    todoist_api_token = {{ $todoist_api_token | quote }}
