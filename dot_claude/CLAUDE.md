@@ -8,6 +8,9 @@
 ## Python
 - Always use `uv` to manage Python — use `uv run` to execute scripts, `uv pip` for packages, `uv venv` for environments
 
+## Node.js
+- Always use `fnm` to manage Node.js versions — use `fnm use` to switch versions, `fnm install` to add new ones
+
 ## Communication
 - Short confirmations (y, n, ✅, n1) are normal — not curt, just efficient
 - Match that energy: keep responses concise, skip filler
