@@ -27,10 +27,11 @@ chezmoi data            # Show current template variable values
 
 ## Templating
 
-Templates use Go template syntax with chezmoi functions. Variables are defined in `.chezmoi.toml.tmpl` using `promptStringOnce` (prompts user once during `chezmoi init`, then cached):
+Templates use Go template syntax with chezmoi functions. Variables are defined in `.chezmoi.toml.tmpl`:
 
-- `git_email`, `git_name`, `git_signingkey` — used in `dot_gitconfig.tmpl`
-- `emacs_name`, `emacs_email` — used in `private_dot_emacs.tmpl`
+- `promptStringOnce` — for stable values that rarely change (prompts once during `chezmoi init`, then cached). Use for identity/credentials: `git_email`, `git_name`, `git_signingkey`, `emacs_name`, `emacs_email`
+- `promptString` — for optional/changeable values that should re-prompt on every `chezmoi init`. Use for preferences/settings: `roborev_default_agent`, `roborev_design_agent`, etc.
+- `default "value"` — provides a fallback when a variable is empty. Use in both the prompt assignment (`default "codex" (promptString ...)`) and in template output (`default "codex" .varname | quote`)
 
 Access variables in templates as `{{ .git_email }}` (top-level data keys).
 
