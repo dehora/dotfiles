@@ -48,6 +48,7 @@ Access variables in templates as `{{ .git_email }}` (top-level data keys).
 | `private_dot_gnupg/gpg-agent.conf` | `~/.gnupg/gpg-agent.conf` | No | 24h passphrase cache TTL |
 | `private_dot_gnupg/common.conf` | `~/.gnupg/common.conf` | No | Enables keyboxd backend |
 | `dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | No | Global Claude Code guidance |
+| `private_dot_roborev/config.toml.tmpl` | `~/.roborev/config.toml` | Yes | RoboRev code review tool, Anthropic API key from template vars |
 
 ## Git Commits
 
