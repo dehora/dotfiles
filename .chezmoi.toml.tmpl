@@ -4,6 +4,10 @@
 {{- $emacs_name := promptStringOnce . "emacs_name" "Emacs name" -}}
 {{- $emacs_email := promptStringOnce . "emacs_email" "Emacs email" -}}
 {{- $todoist_api_token := promptStringOnce . "todoist_api_token" "Todoist API token" -}}
+{{- $roborev_default_agent := promptStringOnce . "roborev_default_agent" "RoboRev default agent" -}}
+{{- $roborev_design_agent := promptStringOnce . "roborev_design_agent" "RoboRev design agent" -}}
+{{- $roborev_fix_agent := promptStringOnce . "roborev_fix_agent" "RoboRev fix agent" -}}
+{{- $roborev_review_agent := promptStringOnce . "roborev_review_agent" "RoboRev review agent" -}}
 
 [data]
     git_email = {{ $git_email | quote }}
@@ -12,3 +16,7 @@
     emacs_name = {{ $emacs_name | quote }}
     emacs_email = {{ $emacs_email | quote }}
     todoist_api_token = {{ $todoist_api_token | quote }}
+    roborev_default_agent = {{ $roborev_default_agent | quote }}
+    roborev_design_agent = {{ $roborev_design_agent | quote }}
+    roborev_fix_agent = {{ $roborev_fix_agent | quote }}
+    roborev_review_agent = {{ $roborev_review_agent | quote }}
