@@ -1,7 +1,7 @@
 server_addr = "127.0.0.1:7373"
 max_workers = 4
 review_context_count = 3
-default_agent = {{ default "codex" .roborev_default_agent | quote }}
+default_agent = {{ default "claude" .roborev_default_agent | quote }}
 default_model = ""
 job_timeout_minutes = 30
 review_agent = {{ .roborev_review_agent | quote }}
