@@ -207,3 +207,8 @@ cxcd() { cd "$1" && codex; }
 # notesmd-cli shorthand
 alias notesmd="notesmd-cli"
 eval "$(direnv hook zsh)"
+
+# 
+# Added by dehora on 2026-02-24
+# 
+export TARS_HOME=/Users/bill/projects/dehora/tars
