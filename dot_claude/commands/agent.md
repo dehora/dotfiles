@@ -20,6 +20,14 @@ Then stop.
 
 If `--name` is missing, respond with the same usage hint and stop.
 
+Validate the agent name: it must match `^[a-zA-Z0-9_-]+$`. If the name contains `/`, `\`, `.`, whitespace, or any other unsafe characters, respond with:
+```
+Invalid agent name "<name>". Names must contain only letters, numbers, hyphens, and underscores.
+```
+Then stop.
+
+If the task description is empty (nothing after `--name=<name>`), respond with the usage hint and stop.
+
 ## Load persona
 
 Read the persona file at `~/.claude/agents/<name>.md`
