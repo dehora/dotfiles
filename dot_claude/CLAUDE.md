@@ -11,6 +11,10 @@
 ## Node.js
 - Always use `fnm` to manage Node.js versions — use `fnm use` to switch versions, `fnm install` to add new ones
 
+## Anthropic API & cost
+- Never trigger paid Anthropic **API** usage — API-key scripts, the Batches API, or any SDK generation call — without explicit per-step permission, even after a general "go ahead" on a feature. Surface it as its own decision with a cost estimate first.
+- Default to subscription-billed inference (the Claude Code session itself, or subagents) for LLM work. Reach for the API only when a task genuinely needs programmatic/bulk generation, and say so before running it. (Anthropic has changed the developer cost basis recently — API spend is sensitive.)
+
 ## Dotfiles
 - `~/.claude/CLAUDE.md` is managed by chezmoi — always use `chezmoi re-add`, commit, and push in the chezmoi source directory (`~/.local/share/chezmoi`) to persist changes
 
