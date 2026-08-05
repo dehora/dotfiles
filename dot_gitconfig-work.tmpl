@@ -1,0 +1,5 @@
+# Included by ~/.gitconfig for repos whose remote matches the work pattern.
+# Values come from local chezmoi data, never from this repo.
+[user]
+	email = {{ .work_git_email | quote }}
+	signingkey = {{ .work_git_signingkey | quote }}

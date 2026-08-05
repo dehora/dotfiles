@@ -18,3 +18,16 @@ protocol = https
 	gpgsign = true
 [branch]
 	sort=-committerdate
+{{- if .work_git_signingkey }}
+
+# Work repos identify differently. Matched on the remote URL so it applies
+# wherever the clone lives, plus the working directory for clones that have no
+# remote yet. Patterns and identity come from local chezmoi data - this repo is
+# public. Two URL patterns because `*` does not cross `/`.
+{{- range splitList "," .work_git_urlmatch }}
+[includeIf "hasconfig:remote.*.url:{{ . }}"]
+	path = ~/.gitconfig-work
+{{- end }}
+[includeIf "gitdir:{{ .work_git_dir }}"]
+	path = ~/.gitconfig-work
+{{- end }}
