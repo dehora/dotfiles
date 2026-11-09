@@ -40,6 +40,14 @@
 (require 'org-habit)
 (require 'org-superstar)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+;;
+;; larger text in org buffers only (default face is 140 = 14pt); tweak to taste
+;;
+(defvar dehora/org-text-scale 1.25)
+(defun dehora/org-larger-text ()
+  (face-remap-add-relative 'default :height dehora/org-text-scale))
+(add-hook 'org-mode-hook #'dehora/org-larger-text)
+(add-hook 'org-agenda-mode-hook #'dehora/org-larger-text)
 ;;(require 'org-super-agenda)
 (require 'org-journal)
 ;;
@@ -48,6 +56,14 @@
 ;;
 (define-key org-mode-map (kbd "C-c #") nil) ; remove old binding
 (define-key org-mode-map (kbd "C-c £") 'org-update-statistics-cookies)
+
+;;
+;; files live in iCloud and are also edited by beorg on the phone:
+;; reload buffers changed on disk, and keep lock/backup files out of iCloud
+;;
+(global-auto-revert-mode 1)
+(setq create-lockfiles nil)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
 ;;
 ;; org-capture conf
