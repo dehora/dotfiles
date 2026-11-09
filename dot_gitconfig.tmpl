@@ -12,7 +12,7 @@ protocol = https
 {{- if $work }}
 {{- $email = .work_git_email }}
 {{- $key = .work_git_signingkey }}
-{{- $name = default .git_name .work_git_name }}
+{{- $name = .work_git_name }}
 {{- end }}
 [user]
 	email = {{ $email | quote }}

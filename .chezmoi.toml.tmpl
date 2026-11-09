@@ -4,7 +4,8 @@
 {{- $git_signingkey := promptStringOnce . "git_signingkey" "Personal git signing key (blank if none)" "" -}}
 {{- /* Work identity. Prompts are generic; the values stay in the local config. */ -}}
 {{- $work_git_email := promptStringOnce . "work_git_email" "Work git email (blank if none)" "" -}}
-{{- $work_git_name := promptStringOnce . "work_git_name" "Work git name (blank to use personal)" "" -}}
+{{- $work_git_name := promptStringOnce . "work_git_name" "Work git name" -}}
+{{- if and $work_git_email (not $work_git_name) }}{{ fail "Work git name is required when a work git email is set" }}{{ end -}}
 {{- $work_git_signingkey := promptStringOnce . "work_git_signingkey" "Work git signing key (blank if none)" "" -}}
 {{- $work_git_urlmatch := promptStringOnce . "work_git_urlmatch" "Work remote-URL globs for personal machines, comma separated (blank if none)" "" -}}
 {{- $work_git_dir := promptStringOnce . "work_git_dir" "Work checkout dir for personal machines, trailing slash (blank if none)" "" -}}
