@@ -2,10 +2,22 @@
 
 [hub]
 protocol = https
+{{- /* machine = work: work identity is the default and personal repos are
+       matched by URL; personal (default): the reverse. Signing is on only
+       when the default identity has a signing key. */ -}}
+{{- $work := eq (default "personal" (index . "machine")) "work" }}
+{{- $email := .git_email }}
+{{- $key := .git_signingkey }}
+{{- if $work }}
+{{- $email = .work_git_email }}
+{{- $key = .work_git_signingkey }}
+{{- end }}
 [user]
-	email = {{ .git_email | quote }}
+	email = {{ $email | quote }}
 	name = {{ .git_name | quote }}
-	signingkey = {{ .git_signingkey | quote }}
+{{- if $key }}
+	signingkey = {{ $key | quote }}
+{{- end }}
 [color]
 	ui = true
 [filter "media"]
@@ -15,10 +27,10 @@ protocol = https
 [fetch]
 	prune = true
 [commit]
-	gpgsign = true
+	gpgsign = {{ if $key }}true{{ else }}false{{ end }}
 [branch]
 	sort=-committerdate
-{{- if .work_git_signingkey }}
+{{- if and (not $work) .work_git_signingkey }}
 
 # Work repos identify differently. Matched on the remote URL so it applies
 # wherever the clone lives, plus the working directory for clones that have no
@@ -30,4 +42,12 @@ protocol = https
 {{- end }}
 [includeIf "gitdir:{{ .work_git_dir }}"]
 	path = ~/.gitconfig-work
+{{- end }}
+{{- if $work }}
+
+# Personal repos on a work machine, matched on the remote URL.
+{{- range splitList "," (default "git@github.com:dehora/*,https://github.com/dehora/*" (index . "personal_git_urlmatch")) }}
+[includeIf "hasconfig:remote.*.url:{{ . }}"]
+	path = ~/.gitconfig-personal
+{{- end }}
 {{- end }}

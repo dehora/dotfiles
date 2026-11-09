@@ -37,7 +37,7 @@ Access variables in templates as `{{ .git_email }}` (top-level data keys).
 
 ## Personal vs work machines
 
-`machine` (prompted once: `personal` or `work`, default `personal`) drives `.chezmoiignore`, which is a template. On `work` it skips personal-only files: `.config/direnv` (Anthropic key), `.config/todoist-cli`, `.roborev`, `.gnupg`. Keep `dot_zshrc` portable: use `$HOME` not `/Users/bill`, and guard tool init with `command -v` / file checks so a machine without the tool starts cleanly.
+`machine` (prompted once: `personal` or `work`, default `personal`) drives `.chezmoiignore`, which is a template. On `work` it skips personal-only files: `.config/direnv` (Anthropic key), `.config/todoist-cli`, `.roborev`, `.gnupg`. It also sets the default git identity: personal on `personal` (work repos matched via `work_git_urlmatch` → `~/.gitconfig-work`), work on `work` (personal repos matched via `personal_git_urlmatch` → `~/.gitconfig-personal`). Commit signing is on only when that identity has a signing key. Keep `dot_zshrc` portable: use `$HOME` not `/Users/bill`, and guard tool init with `command -v` / file checks so a machine without the tool starts cleanly.
 
 ## Managed Configurations
 

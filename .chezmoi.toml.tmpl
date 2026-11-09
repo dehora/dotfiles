@@ -7,6 +7,7 @@
 {{- $work_git_signingkey := promptStringOnce . "work_git_signingkey" "Work git signing key (blank if none)" "" -}}
 {{- $work_git_urlmatch := promptStringOnce . "work_git_urlmatch" "Work remote-URL globs, comma separated" "" -}}
 {{- $work_git_dir := promptStringOnce . "work_git_dir" "Work checkout dir (trailing slash)" "" -}}
+{{- $personal_git_urlmatch := promptStringOnce . "personal_git_urlmatch" "Personal remote-URL globs for work machines, comma separated" "git@github.com:dehora/*,https://github.com/dehora/*" -}}
 {{- $emacs_name := promptStringOnce . "emacs_name" "Emacs name" -}}
 {{- $emacs_email := promptStringOnce . "emacs_email" "Emacs email" -}}
 {{- $todoist_api_token := promptStringOnce . "todoist_api_token" "Todoist API token" -}}
@@ -25,6 +26,7 @@
     work_git_signingkey = {{ $work_git_signingkey | quote }}
     work_git_urlmatch = {{ $work_git_urlmatch | quote }}
     work_git_dir = {{ $work_git_dir | quote }}
+    personal_git_urlmatch = {{ $personal_git_urlmatch | quote }}
     emacs_name = {{ $emacs_name | quote }}
     emacs_email = {{ $emacs_email | quote }}
     todoist_api_token = {{ $todoist_api_token | quote }}

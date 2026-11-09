@@ -12,4 +12,7 @@ CLAUDE.md
 .roborev/**
 .gnupg
 .gnupg/**
+.gitconfig-work
+{{- else }}
+.gitconfig-personal
 {{- end }}
