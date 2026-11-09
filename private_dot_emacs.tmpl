@@ -173,10 +173,10 @@
     (message "Archived %d heading(s) for %s" n year)))
 
 ;;
-;; org logging (done-state notes go into the LOGBOOK drawer, see custom vars)
+;; org logging: just a CLOSED timestamp when something is done; the only
+;; logbook entry is the reason asked for when an item goes to NOPE
 ;;
-(setq org-log-redeadline t)
-(setq org-log-reschedule t)
+(setq org-log-done 'time)
 
 ;;
 ;; duplicate lines ide style, using the Emacs 29 built-in (leaves the
@@ -291,7 +291,6 @@
    "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal")
  '(org-journal-file-format "%Y-%m-%d.org")
  '(org-log-into-drawer t)
- '(org-log-refile 'time)
  '(org-priority-default 2)
  '(org-priority-highest 1)
  '(org-priority-lowest 3)
@@ -305,7 +304,7 @@
  '(org-superstar-headline-bullets-list '(("✪" 9673) ("✸" 9673) ("✿" 9673) ("✸" 9673)))
  '(org-todo-keyword-faces '(("TODO" . "#ff5555") ("NOPE" . "#bd93f9")))
  '(org-todo-keywords
-   '((sequence "TODO(t!)" "DOING(g!)" "|" "DONE(d!)")
+   '((sequence "TODO(t)" "DOING(g)" "|" "DONE(d)")
      (sequence "LATER(l)" "|" "NOPE(n@)")))
  '(org-use-fast-todo-selection 'auto)
  '(package-selected-packages
