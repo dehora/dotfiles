@@ -85,12 +85,15 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
   fnm
 )
+# custom plugins only if installed on this machine
+for p in zsh-autosuggestions zsh-syntax-highlighting; do
+  [[ -d "${ZSH_CUSTOM:-$ZSH/custom}/plugins/$p" ]] && plugins+=($p)
+done
+unset p
 
-source $ZSH/oh-my-zsh.sh
+[[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -122,12 +125,12 @@ source $ZSH/oh-my-zsh.sh
 #
 # Added by dehora on 2023-12-15
 #
-export PATH="$PATH:/Users/bill/bin"
+export PATH="$PATH:$HOME/bin"
 
 #
 # Added by dehora on 2023-12-15
 # 
-eval "$(~/bin/rtx activate zsh)"
+[[ -x ~/bin/rtx ]] && eval "$(~/bin/rtx activate zsh)"
 
 
 #
@@ -140,12 +143,13 @@ export PIP_REQUIRE_VIRTUALENV=true
 # 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-#
-# Added by dehora on 2023-12-15
-#
-eval "$(pyenv virtualenv-init -)"
+if command -v pyenv >/dev/null; then
+  eval "$(pyenv init -)"
+  #
+  # Added by dehora on 2023-12-15
+  #
+  eval "$(pyenv virtualenv-init - 2>/dev/null)"
+fi
 
 # 
 # Added by dehora on 2023-12-15
@@ -174,14 +178,14 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 
 # Created by `pipx` on 2024-06-18 09:47:47
-export PATH="$PATH:/Users/bill/.local/bin"
-if [ -f "/Users/bill/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/bill/.config/fabric/fabric-bootstrap.inc"; fi
-. "$HOME/.cargo/env"
-eval "$(uv generate-shell-completion zsh)"
+export PATH="$PATH:$HOME/.local/bin"
+if [ -f "$HOME/.config/fabric/fabric-bootstrap.inc" ]; then . "$HOME/.config/fabric/fabric-bootstrap.inc"; fi
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-eval "$(uvx --generate-shell-completion zsh)"
+command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 
 
 # 
@@ -200,15 +204,15 @@ setopt HIST_REDUCE_BLANKS
 # Added by dehora on 2026-02-04
 # 
 # fnm
-eval "$(fnm env --use-on-cd --shell zsh)"
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 # Codex CLI helpers
 alias cx="codex"
 cxcd() { cd "$1" && codex; }
 # notesmd-cli shorthand
 alias notesmd="notesmd-cli"
-eval "$(direnv hook zsh)"
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
 # 
 # Added by dehora on 2026-02-24
 # 
-export TARS_HOME=/Users/bill/projects/dehora/tars
+export TARS_HOME="$HOME/projects/dehora/tars"

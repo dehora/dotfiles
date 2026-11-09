@@ -35,6 +35,10 @@ Templates use Go template syntax with chezmoi functions. Variables are defined i
 
 Access variables in templates as `{{ .git_email }}` (top-level data keys).
 
+## Personal vs work machines
+
+`machine` (prompted once: `personal` or `work`, default `personal`) drives `.chezmoiignore`, which is a template. On `work` it skips personal-only files: `.config/direnv` (Anthropic key), `.config/todoist-cli`, `.roborev`, `.gnupg`. Keep `dot_zshrc` portable: use `$HOME` not `/Users/bill`, and guard tool init with `command -v` / file checks so a machine without the tool starts cleanly.
+
 ## Managed Configurations
 
 | Source file | Target | Templated | Notes |

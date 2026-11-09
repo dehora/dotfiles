@@ -1,3 +1,15 @@
 README.md
 LICENSE
 CLAUDE.md
+
+{{- /* personal-only files, skipped on a work machine */ -}}
+{{- if eq (default "personal" (index . "machine")) "work" }}
+.config/direnv
+.config/direnv/**
+.config/todoist-cli
+.config/todoist-cli/**
+.roborev
+.roborev/**
+.gnupg
+.gnupg/**
+{{- end }}
