@@ -216,3 +216,8 @@ command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 # Added by dehora on 2026-02-24
 # 
 export TARS_HOME="$HOME/projects/dehora/tars"
+
+#
+# machine-specific settings that stay out of this public repo
+#
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
