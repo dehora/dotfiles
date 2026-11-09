@@ -8,13 +8,15 @@ protocol = https
 {{- $work := eq (default "personal" (index . "machine")) "work" }}
 {{- $email := .git_email }}
 {{- $key := .git_signingkey }}
+{{- $name := .git_name }}
 {{- if $work }}
 {{- $email = .work_git_email }}
 {{- $key = .work_git_signingkey }}
+{{- $name = default .git_name .work_git_name }}
 {{- end }}
 [user]
 	email = {{ $email | quote }}
-	name = {{ .git_name | quote }}
+	name = {{ $name | quote }}
 {{- if $key }}
 	signingkey = {{ $key | quote }}
 {{- end }}

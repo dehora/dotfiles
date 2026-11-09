@@ -1,9 +1,10 @@
 {{- $machine := promptStringOnce . "machine" "Machine type (personal or work)" "personal" -}}
 {{- $git_email := promptStringOnce . "git_email" "Personal git email" -}}
-{{- $git_name := promptStringOnce . "git_name" "Git name" -}}
+{{- $git_name := promptStringOnce . "git_name" "Personal git name" -}}
 {{- $git_signingkey := promptStringOnce . "git_signingkey" "Personal git signing key (blank if none)" "" -}}
 {{- /* Work identity. Prompts are generic; the values stay in the local config. */ -}}
 {{- $work_git_email := promptStringOnce . "work_git_email" "Work git email (blank if none)" "" -}}
+{{- $work_git_name := promptStringOnce . "work_git_name" "Work git name (blank to use personal)" "" -}}
 {{- $work_git_signingkey := promptStringOnce . "work_git_signingkey" "Work git signing key (blank if none)" "" -}}
 {{- $work_git_urlmatch := promptStringOnce . "work_git_urlmatch" "Work remote-URL globs for personal machines, comma separated (blank if none)" "" -}}
 {{- $work_git_dir := promptStringOnce . "work_git_dir" "Work checkout dir for personal machines, trailing slash (blank if none)" "" -}}
@@ -23,6 +24,7 @@
     git_name = {{ $git_name | quote }}
     git_signingkey = {{ $git_signingkey | quote }}
     work_git_email = {{ $work_git_email | quote }}
+    work_git_name = {{ $work_git_name | quote }}
     work_git_signingkey = {{ $work_git_signingkey | quote }}
     work_git_urlmatch = {{ $work_git_urlmatch | quote }}
     work_git_dir = {{ $work_git_dir | quote }}

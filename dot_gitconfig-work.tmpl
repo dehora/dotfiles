@@ -2,4 +2,7 @@
 # Values come from local chezmoi data, never from this repo.
 [user]
 	email = {{ .work_git_email | quote }}
+{{- if .work_git_name }}
+	name = {{ .work_git_name | quote }}
+{{- end }}
 	signingkey = {{ .work_git_signingkey | quote }}

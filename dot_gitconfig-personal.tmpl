@@ -2,6 +2,7 @@
 # the personal pattern. Values come from local chezmoi data, never this repo.
 [user]
 	email = {{ .git_email | quote }}
+	name = {{ .git_name | quote }}
 {{- if .git_signingkey }}
 	signingkey = {{ .git_signingkey | quote }}
 [commit]
