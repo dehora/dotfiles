@@ -1,4 +1,4 @@
-{{- $machine := promptChoiceOnce . "machine" "Machine type" (list "personal" "work") -}}
+{{- $machine := promptStringOnce . "machine" "Machine type (personal or work)" | trim | lower -}}
 {{- if not (has $machine (list "personal" "work")) }}{{ fail (printf "machine must be personal or work, got %q" $machine) }}{{ end -}}
 {{- $work := eq $machine "work" -}}
 {{- $git_email := promptStringOnce . "git_email" "Personal git email" -}}
