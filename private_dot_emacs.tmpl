@@ -87,6 +87,14 @@
                                "* TODO %i%? \n %U")))
 
 ;;
+;; shortcuts: C-c t = work task, C-c n = work note (same as C-c c w / C-c c n)
+;;
+(defun dehora/capture-work-task () (interactive) (org-capture nil "w"))
+(defun dehora/capture-work-note () (interactive) (org-capture nil "n"))
+(global-set-key (kbd "C-c t") #'dehora/capture-work-task)
+(global-set-key (kbd "C-c n") #'dehora/capture-work-note)
+
+;;
 ;; allow refile to target a file and then optionally create an new entry
 ;;
 (setq org-refile-allow-creating-parent-nodes 'confirm)
