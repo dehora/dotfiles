@@ -1,12 +1,12 @@
 {{- $machine := promptStringOnce . "machine" "Machine type (personal or work)" "personal" -}}
-{{- $git_email := promptStringOnce . "git_email" "Git email" -}}
+{{- $git_email := promptStringOnce . "git_email" "Personal git email" -}}
 {{- $git_name := promptStringOnce . "git_name" "Git name" -}}
-{{- $git_signingkey := promptStringOnce . "git_signingkey" "Git signingkey" -}}
+{{- $git_signingkey := promptStringOnce . "git_signingkey" "Personal git signing key (blank if none)" "" -}}
 {{- /* Work identity. Prompts are generic; the values stay in the local config. */ -}}
 {{- $work_git_email := promptStringOnce . "work_git_email" "Work git email (blank if none)" "" -}}
 {{- $work_git_signingkey := promptStringOnce . "work_git_signingkey" "Work git signing key (blank if none)" "" -}}
-{{- $work_git_urlmatch := promptStringOnce . "work_git_urlmatch" "Work remote-URL globs, comma separated" "" -}}
-{{- $work_git_dir := promptStringOnce . "work_git_dir" "Work checkout dir (trailing slash)" "" -}}
+{{- $work_git_urlmatch := promptStringOnce . "work_git_urlmatch" "Work remote-URL globs for personal machines, comma separated (blank if none)" "" -}}
+{{- $work_git_dir := promptStringOnce . "work_git_dir" "Work checkout dir for personal machines, trailing slash (blank if none)" "" -}}
 {{- $personal_git_urlmatch := promptStringOnce . "personal_git_urlmatch" "Personal remote-URL globs for work machines, comma separated" "git@github.com:dehora/*,https://github.com/dehora/*" -}}
 {{- $emacs_name := promptStringOnce . "emacs_name" "Emacs name" -}}
 {{- $emacs_email := promptStringOnce . "emacs_email" "Emacs email" -}}
