@@ -1,15 +1,9 @@
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
-
+;;
+;; packages: Emacs 27+ activates installed packages before init, so no
+;; package-initialize here. GNU ELPA is built in; add MELPA over https.
+;;
 (require 'package)
-(require 'use-package)
-
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;;
 ;; Allow hash to be entered
@@ -112,23 +106,11 @@
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 ;;
-;; duplicate lines ide style
+;; duplicate lines ide style, using the Emacs 29 built-in (leaves the
+;; kill ring alone)
 ;;
-(defun duplicate-line()
-  (interactive)
-  (move-beginning-of-line 1)
-  (kill-line)
-  (yank)
-  (open-line 1)
-  (next-line 1)
-  (yank)
-)
 (global-set-key (kbd "C-d") 'duplicate-line)
 
-;;
-;; Set the debug option to enable a backtrace when a problem occurs.
-;;
-(setq debug-on-error t)
 
 ;;
 ;; make alt- optional
