@@ -52,9 +52,36 @@
 ;;
 (global-set-key (kbd "C-c c") 'org-capture)
 
-(setq org-capture-templates '(("w" "work" entry
-                               (file+headline "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/work.org" "Inbox")
+;;
+;; work.org is a weekly log: top-level headings are ISO weeks (2026-W46),
+;; newest first. Capture files into this week's heading, creating it at the
+;; top of the file when it doesn't exist yet.
+;;
+(defconst dehora/work-file
+  "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/work.org")
+
+(defun dehora/goto-work-week ()
+  "Put point on this week's top-level heading, creating it if missing."
+  (let ((heading (format-time-string "%G-W%V")))
+    (widen)
+    (goto-char (point-min))
+    (unless (re-search-forward
+             (concat "^\\* " (regexp-quote heading) "[ \t]*$") nil t)
+      (goto-char (point-min))
+      (if (re-search-forward "^\\* " nil t)
+          (beginning-of-line)
+        (goto-char (point-max))
+        (unless (bolp) (insert "\n")))
+      (insert "* " heading "\n")
+      (forward-line -1))
+    (beginning-of-line)))
+
+(setq org-capture-templates `(("w" "work task" entry
+                               (file+function ,dehora/work-file dehora/goto-work-week)
                                "* TODO %i%?")
+                              ("n" "work note" entry
+                               (file+function ,dehora/work-file dehora/goto-work-week)
+                               "* %?\n%U")
                               ("d" "dehora" entry
                                (file+headline "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/dehora.org" "Inbox")
                                "* TODO %i%? \n %U")))
@@ -69,6 +96,73 @@
 ;; org agenda conf
 ;;
 (define-key global-map "\C-ca" 'org-agenda)
+
+;;
+;; C-c 1: every open #1 in work.org, whatever week it's in
+;;
+(setq org-agenda-custom-commands
+      `(("1" "Work #1s" tags-todo "+PRIORITY=\"1\""
+         ((org-agenda-files (list ,dehora/work-file))))))
+(defun dehora/work-ones ()
+  (interactive)
+  (org-agenda nil "1"))
+(global-set-key (kbd "C-c 1") #'dehora/work-ones)
+
+;;
+;; M-x dehora/archive-work-year: move a year's week headings (and any
+;; "* YEAR" block) from work.org into work.org_archive under "* YEAR",
+;; matching the archive's year -> week layout
+;;
+(defun dehora/--cut (beg end)
+  (prog1 (let ((s (buffer-substring beg end)))
+           (if (string-suffix-p "\n" s) s (concat s "\n")))
+    (delete-region beg end)))
+
+(defun dehora/archive-work-year (year)
+  (interactive
+   (list (read-string "Archive year: "
+                      (number-to-string (1- (decoded-time-year (decode-time)))))))
+  (let* ((archive (concat dehora/work-file "_archive"))
+         (week-re (concat "^\\* " (regexp-quote year) "-W[0-9]+"))
+         (year-re (concat "^\\* " (regexp-quote year) "[ \t]*$"))
+         (weeks '()) (wrapped "") (n 0))
+    (with-current-buffer (find-file-noselect dehora/work-file)
+      (org-with-wide-buffer
+       (goto-char (point-min))
+       (while (re-search-forward "^\\* " nil t)
+         (beginning-of-line)
+         (when (or (looking-at week-re) (looking-at year-re)) (cl-incf n))
+         (end-of-line))
+       (when (zerop n) (user-error "Nothing for %s in work.org" year))
+       (unless (yes-or-no-p (format "Move %d heading(s) for %s to the archive? " n year))
+         (user-error "Cancelled"))
+       (goto-char (point-max))
+       (while (re-search-backward "^\\* " nil t)
+         (let ((end (save-excursion (org-end-of-subtree t t) (point))))
+           (cond ((looking-at week-re) (push (dehora/--cut (point) end) weeks))
+                 ((looking-at year-re)
+                  (setq wrapped (dehora/--cut (line-beginning-position 2) end))
+                  (delete-region (point) (line-beginning-position 2))))))
+       (save-buffer)))
+    (let ((body (concat (with-temp-buffer
+                          (insert (apply #'concat weeks))
+                          (delay-mode-hooks (org-mode))
+                          (org-map-entries #'org-demote)
+                          (buffer-string))
+                        wrapped)))
+      (with-current-buffer (find-file-noselect archive)
+        (org-with-wide-buffer
+         (goto-char (point-min))
+         (if (re-search-forward year-re nil t)
+             (forward-line 1)
+           (goto-char (point-min))
+           (if (re-search-forward "^\\* " nil t)
+               (beginning-of-line)
+             (goto-char (point-max)))
+           (insert "* " year "\n"))
+         (insert body))
+        (save-buffer)))
+    (message "Archived %d heading(s) for %s" n year)))
 
 ;;
 ;; org logging (done-state notes go into the LOGBOOK drawer, see custom vars)
