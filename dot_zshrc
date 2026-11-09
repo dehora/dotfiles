@@ -181,11 +181,11 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export PATH="$PATH:$HOME/.local/bin"
 if [ -f "$HOME/.config/fabric/fabric-bootstrap.inc" ]; then . "$HOME/.config/fabric/fabric-bootstrap.inc"; fi
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
+command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh 2>/dev/null)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
+command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh 2>/dev/null)"
 
 
 # 
